@@ -16,6 +16,7 @@ License:        AGPLv3+
 Group:          Productivity/Networking/Opsi
 Version:        1.0
 Release:        1
+Source:		%{name}_{%version}-{%release}.tar.gz
 Summary:        Configure a system to be able to deploy Linux with opsi.
 %if %{?suse_version: %{suse_version} >= 1120} %{!?suse_version:1}
 BuildArch:      noarch
