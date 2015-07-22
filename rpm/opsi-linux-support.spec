@@ -38,6 +38,11 @@ of Linux distributions via opsi is possible.
 
 # ===[ install ]====================================
 %install
+%if %{?suse_version}
+mkdir -p $RPM_BUILD_ROOT/etc/opsi/ || true
+touch $RPM_BUILD_ROOT/etc/opsi/.shut_up_sles
+%endif
+
 
 # ===[ clean ]======================================
 %clean
@@ -58,6 +63,9 @@ fi
 # ===[ files ]======================================
 %files
 
+%if %{?suse_version}
+%config(noreplace) /etc/opsi/.shut_up_sles
+%endif
+
 # ===[ changelog ]==================================
 %changelog
-
