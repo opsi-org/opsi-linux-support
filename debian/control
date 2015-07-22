@@ -1,0 +1,15 @@
+Source: opsi-linux-support 
+Maintainer: uib GmbH <info@uib.de>
+Section: opsi
+Priority: optional
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9)
+
+Package: opsi-linux-support 
+Architecture: all
+Depends: nfs-kernel-server, ${shlibs:Depends}, ${misc:Depends}
+Description: Configure system to be able to deploy Linux with opsi.
+ This package configures the system so that shares and
+ software required to deploy Linux via opsi are configured.
+
+

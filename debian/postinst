@@ -1,0 +1,29 @@
+#! /bin/bash -e
+# Copyright (C) 2015 uib GmbH
+# http://www.uib.de
+# All rights reserved.
+
+#DEBHELPER#
+
+case "$1" in
+	configure)
+		[ -e "/etc/exports" ] || touch /etc/exports
+		
+		set +e
+		grep opsi_nfs_share /etc/exports
+		res=$?
+		set -e
+		if [ $res -ne 0 ]; then
+			echo '/var/lib/opsi/depot/opsi_nfs_share *(ro,no_root_squash,insecure,async,subtree_check,fsid=0)' >> /etc/exports
+		fi 
+	;;
+
+	abort-upgrade|abort-remove|abort-deconfigure)
+	;;
+
+	*)
+		echo "postinst called with unknown argument \`$1'" >&2
+		exit 1
+	;;
+esac
+
