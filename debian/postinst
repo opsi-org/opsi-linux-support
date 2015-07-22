@@ -10,7 +10,7 @@ case "$1" in
 		[ -e "/etc/exports" ] || touch /etc/exports
 		
 		set +e
-		grep opsi_nfs_share /etc/exports
+		grep opsi_nfs_share /etc/exports >/dev/null 2>&1
 		res=$?
 		set -e
 		if [ $res -ne 0 ]; then
