@@ -65,7 +65,11 @@ fi
 %files
 
 %if 0%{?suse_version}
+%defattr(-,root,root)
+
 %config(noreplace) /etc/opsi/.shut_up_sles
+
+%dir /etc/opsi/
 %endif
 
 # ===[ changelog ]==================================

@@ -1,5 +1,11 @@
-opsi-linux-support (1.0-1) UNRELEASED; urgency=medium
+opsi-linux-support (1.0-2) experimental; urgency=medium
+
+  * Fixes for SLES 11.
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Wed, 22 Jul 2015 14:37:52 +0200
+
+opsi-linux-support (1.0-1) experimental; urgency=medium
 
   * Initial release.
 
- -- Niko Wenselowski <n.wenselowski@uib.de>  Wed, 22 Jul 2015 10:15:49 +0200
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Wed, 22 Jul 2015 14:37:32 +0200
