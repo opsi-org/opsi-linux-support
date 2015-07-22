@@ -1,3 +1,15 @@
+opsi-linux-support (1.0-4) experimental; urgency=medium
+
+  * Lower debian/compat for UCS 3.2.
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Wed, 22 Jul 2015 14:57:50 +0200
+
+opsi-linux-support (1.0-3) experimental; urgency=medium
+
+  * Requiring an older version of debhelper because of UCS 3.2.
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Wed, 22 Jul 2015 14:49:27 +0200
+
 opsi-linux-support (1.0-2) experimental; urgency=medium
 
   * Fixes for SLES 11.
