@@ -21,6 +21,7 @@ Summary:        Configure a system to be able to deploy Linux with opsi.
 %if %{?suse_version: %{suse_version} >= 1120} %{!?suse_version:1}
 BuildArch:      noarch
 %endif
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 # ===[ description ]================================
 %description
@@ -38,7 +39,7 @@ of Linux distributions via opsi is possible.
 
 # ===[ install ]====================================
 %install
-%if %{?suse_version}
+%if 0%{?suse_version}
 mkdir -p $RPM_BUILD_ROOT/etc/opsi/ || true
 touch $RPM_BUILD_ROOT/etc/opsi/.shut_up_sles
 %endif
@@ -63,7 +64,7 @@ fi
 # ===[ files ]======================================
 %files
 
-%if %{?suse_version}
+%if 0%{?suse_version}
 %config(noreplace) /etc/opsi/.shut_up_sles
 %endif
 
