@@ -12,7 +12,7 @@ Requires:       nfs-utils
 Requires:       nfs-kernel-server
 %endif
 Url:            http://www.opsi.org
-License:        AGPLv3+
+License:        AGPL-3.0+
 Group:          Productivity/Networking/Opsi
 Version:        1.0
 Release:        1
