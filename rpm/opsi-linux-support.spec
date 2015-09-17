@@ -61,7 +61,15 @@ res=$?
 set -e
 if [ $res -ne 0 ]; then
 	echo '/var/lib/opsi/depot/opsi_nfs_share *(ro,no_root_squash,insecure,async,subtree_check,fsid=0)' >> /etc/exports
-fi 
+fi
+
+%if 0%{?suse_version}
+service nfsserver restart
+%else
+service nfs-server restart
+%endif
+
+showmount -e localhost
 
 # ===[ files ]======================================
 %files

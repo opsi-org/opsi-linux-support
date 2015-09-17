@@ -2,8 +2,9 @@ opsi-linux-support (1.0-5) UNRELEASED; urgency=medium
 
   * RPM: machine-parseable license.
   * Creating folder /var/lib/opsi/depot/opsi_nfs_share if missing.
+  * Restarting NFS-Service after the installation.
 
- -- Niko Wenselowski <n.wenselowski@uib.de>  Thu, 17 Sep 2015 11:44:22 +0200
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Thu, 17 Sep 2015 12:00:08 +0200
 
 opsi-linux-support (1.0-4) experimental; urgency=medium
 

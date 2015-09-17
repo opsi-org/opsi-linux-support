@@ -16,6 +16,9 @@ case "$1" in
 		if [ $res -ne 0 ]; then
 			echo '/var/lib/opsi/depot/opsi_nfs_share *(ro,no_root_squash,insecure,async,subtree_check,fsid=0)' >> /etc/exports
 		fi 
+
+		service nfs-kernel-server restart
+		showmount -e localhost
 	;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)
