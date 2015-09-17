@@ -1,3 +1,9 @@
+opsi-linux-support (1.0-6) experimental; urgency=medium
+
+  * Suse: if the restart of nfsserver fails inform the user about it.
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Thu, 17 Sep 2015 12:48:48 +0200
+
 opsi-linux-support (1.0-5) experimental; urgency=medium
 
   * RPM: machine-parseable license.

@@ -64,7 +64,7 @@ if [ $res -ne 0 ]; then
 fi
 
 %if 0%{?suse_version}
-service nfsserver restart
+service nfsserver restart || echo "Restarting nfsserver failed. Please restart manually!"
 %else
 service nfs-server restart
 %endif
