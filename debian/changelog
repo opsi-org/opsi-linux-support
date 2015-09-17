@@ -1,4 +1,4 @@
-opsi-linux-support (1.0-5) UNRELEASED; urgency=medium
+opsi-linux-support (1.0-5) experimental; urgency=medium
 
   * RPM: machine-parseable license.
   * Creating folder /var/lib/opsi/depot/opsi_nfs_share if missing.
