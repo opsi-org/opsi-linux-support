@@ -53,6 +53,8 @@ rm -rf $RPM_BUILD_ROOT
 %post
 [ -e "/etc/exports" ] || touch /etc/exports
 
+[ -d "/var/lib/opsi/depot/opsi_nfs_share" ] || mkdir -p "/var/lib/opsi/depot/opsi_nfs_share"
+
 set +e
 grep opsi_nfs_share /etc/exports >/dev/null 2>&1
 res=$?
