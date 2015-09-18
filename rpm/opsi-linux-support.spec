@@ -1,5 +1,5 @@
 #
-# spec file for package opsi-linux-support 
+# spec file for package opsi-linux-support
 #
 # Copyright (c) 2015 uib GmbH.
 # This file and all modifications and additions to the pristine
@@ -63,13 +63,15 @@ if [ $res -ne 0 ]; then
 	echo '/var/lib/opsi/depot/opsi_nfs_share *(ro,no_root_squash,insecure,async,subtree_check,fsid=0)' >> /etc/exports
 fi
 
-%if 0%{?suse_version}
-service nfsserver restart || echo "Restarting nfsserver failed. Please restart manually!"
+%if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600 || 0%{?suse_version} == 1110
+service nfs restart && showmount -e localhost
 %else
-service nfs-server restart
+%if 0%{?suse_version}
+service nfsserver restart && showmount -e localhost
+%else
+service nfs-server restart && showmount -e localhost
 %endif
-
-showmount -e localhost
+%endif
 
 # ===[ files ]======================================
 %files

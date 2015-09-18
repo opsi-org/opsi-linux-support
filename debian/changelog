@@ -1,3 +1,9 @@
+opsi-linux-support (1.0-7) UNRELEASED; urgency=medium
+
+  * RPM: better distinguishing for the required service name for the restart
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Fri, 18 Sep 2015 14:20:16 +0200
+
 opsi-linux-support (1.0-6) experimental; urgency=medium
 
   * Suse: if the restart of nfsserver fails inform the user about it.
