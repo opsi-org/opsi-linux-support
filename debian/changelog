@@ -1,4 +1,4 @@
-opsi-linux-support (1.0-8) UNRELEASED; urgency=medium
+opsi-linux-support (1.0-8) experimental; urgency=medium
 
   * If restarting nfs server fails in post-installation notify user
     instead of failing.
