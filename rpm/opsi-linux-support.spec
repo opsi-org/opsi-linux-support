@@ -64,12 +64,12 @@ if [ $res -ne 0 ]; then
 fi
 
 %if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600 || 0%{?suse_version} == 1110
-service nfs restart && showmount -e localhost
+service nfs restart && showmount -e localhost || echo "Restarting nfs failed. Please check logs."
 %else
 %if 0%{?suse_version}
-service nfsserver restart && showmount -e localhost
+service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. Please check logs."
 %else
-service nfs-server restart && showmount -e localhost
+service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
 %endif
 %endif
 

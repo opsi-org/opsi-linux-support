@@ -8,17 +8,16 @@
 case "$1" in
 	configure)
 		[ -e "/etc/exports" ] || touch /etc/exports
-		
+
 		set +e
 		grep opsi_nfs_share /etc/exports >/dev/null 2>&1
 		res=$?
 		set -e
 		if [ $res -ne 0 ]; then
 			echo '/var/lib/opsi/depot/opsi_nfs_share *(ro,no_root_squash,insecure,async,subtree_check,fsid=0)' >> /etc/exports
-		fi 
+		fi
 
-		service nfs-kernel-server restart
-		showmount -e localhost
+		service nfs-kernel-server restart && showmount -e localhost || echo "Restarting nfs-kernel-server failed. Please check logs."
 	;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)

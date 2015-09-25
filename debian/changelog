@@ -1,3 +1,10 @@
+opsi-linux-support (1.0-8) UNRELEASED; urgency=medium
+
+  * If restarting nfs server fails in post-installation notify user
+    instead of failing.
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Fri, 25 Sep 2015 11:58:25 +0200
+
 opsi-linux-support (1.0-7) experimental; urgency=medium
 
   * RPM: better distinguishing for the required service name for the restart
