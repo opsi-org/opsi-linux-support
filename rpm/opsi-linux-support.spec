@@ -26,7 +26,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 # ===[ description ]================================
 %description
 This package configures the system that a deployment
-of Linux distributions via opsi is possible.
+of Linux distributions via opsi is possible
 
 # ===[ prep ]=======================================
 %prep
