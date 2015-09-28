@@ -4,7 +4,7 @@ opsi-linux-support (1.0-9) UNRELEASED; urgency=medium
 
  -- Niko Wenselowski <n.wenselowski@uib.de>  Fri, 25 Sep 2015 12:08:35 +0200
 
-opsi-linux-support (1.0-8) experimental; urgency=medium
+opsi-linux-support (1.0-8) testing; urgency=medium
 
   * If restarting nfs server fails in post-installation notify user
     instead of failing.
