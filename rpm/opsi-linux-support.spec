@@ -8,8 +8,10 @@
 Name:           opsi-linux-support
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora_version}
 Requires:       nfs-utils
+Requires:       httpd
 %else
 Requires:       nfs-kernel-server
+Requires:       apache2
 %endif
 Url:            http://www.opsi.org
 License:        AGPL-3.0+
