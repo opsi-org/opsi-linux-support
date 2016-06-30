@@ -17,8 +17,8 @@ Url:            http://www.opsi.org
 License:        AGPL-3.0+
 Group:          Productivity/Networking/Opsi
 Version:        1.0
-Release:        1
-Source:		%{name}_{%version}-{%release}.tar.gz
+Release:        10
+Source:         opsi-linux-support_1.0-10.tar.gz
 Summary:        Configure a system to be able to deploy Linux with opsi.
 %if %{?suse_version: %{suse_version} >= 1120} %{!?suse_version:1}
 BuildArch:      noarch
