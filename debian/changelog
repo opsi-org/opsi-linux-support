@@ -1,4 +1,4 @@
-opsi-linux-support (1.0-10) experimental; urgency=medium
+opsi-linux-support (1.0-9) experimental; urgency=medium
 
   [ Niko Wenselowski ]
   * RPM: Summary does not end with a dot anymore.

@@ -7,18 +7,16 @@
 #
 Name:           opsi-linux-support
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora_version}
-Requires:       nfs-utils
-Requires:       httpd
+Requires:       nfs-utils, httpd
 %else
-Requires:       nfs-kernel-server
-Requires:       apache2
+Requires:       nfs-kernel-server, apache2
 %endif
 Url:            http://www.opsi.org
 License:        AGPL-3.0+
 Group:          Productivity/Networking/Opsi
 Version:        1.0
-Release:        10
-Source:         opsi-linux-support_1.0-10.tar.gz
+Release:        9
+Source:         opsi-linux-support_1.0-9.tar.gz
 Summary:        Configure a system to be able to deploy Linux with opsi.
 %if %{?suse_version: %{suse_version} >= 1120} %{!?suse_version:1}
 BuildArch:      noarch
@@ -67,20 +65,15 @@ fi
 
 %if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600 || 0%{?suse_version} == 1110
 service nfs restart && showmount -e localhost || echo "Restarting nfs failed. Please check logs."
+mkdir -p /var/www/html/opsi
 %else
 %if 0%{?suse_version}
 service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. Please check logs."
+mkdir -p /srv/www/htdocs/opsi
 %else
 service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
-%endif
-%endif
-
-%if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora_version}
 mkdir -p /var/www/html/opsi
-service httpd start
-%else
-mkdir -p /srv/www/htdocs/opsi
-service apache2 start
+%endif
 %endif
 
 # ===[ files ]======================================
