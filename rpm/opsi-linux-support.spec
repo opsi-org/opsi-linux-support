@@ -73,7 +73,13 @@ service nfsserver restart && showmount -e localhost || echo "Restarting nfsserve
 %else
 service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
 %endif
-mkdir -p /var/www/htmp/opsi/
+%endif
+
+mkdir /var/www/html/opsi
+%if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora_version}
+service httpd start
+%else
+service apache2 start
 %endif
 
 # ===[ files ]======================================
