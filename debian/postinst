@@ -18,6 +18,8 @@ case "$1" in
 		fi
 
 		service nfs-kernel-server restart && showmount -e localhost || echo "Restarting nfs-kernel-server failed. Please check logs."
+
+		mkdir -p /var/www/html/opsi/
 	;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)
