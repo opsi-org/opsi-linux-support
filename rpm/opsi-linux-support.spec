@@ -6,7 +6,7 @@
 # package are under the same license as the package itself.
 #
 Name:           opsi-linux-support
-%if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora_version} || 0%{?suse_version}
+%if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora_version}
 Requires:       nfs-utils
 Requires:       httpd
 %else
@@ -75,10 +75,11 @@ service nfs-server restart && showmount -e localhost || echo "Restarting nfs-ser
 %endif
 %endif
 
-mkdir /var/www/html/opsi
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora_version}
+mkdir -p /var/www/html/opsi
 service httpd start
 %else
+mkdir -p /srv/www/htdocs/opsi
 service apache2 start
 %endif
 
