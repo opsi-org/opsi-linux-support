@@ -66,16 +66,16 @@ fi
 %if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600 || 0%{?suse_version} == 1110
 service nfs restart && showmount -e localhost || echo "Restarting nfs failed. Please check logs."
 mkdir -p /var/www/html/opsi
-service httpd start || service httpd restart
+service httpd start || service httpd restart || echo "Restarting httpd failed. Please check logs."
 %else
 %if 0%{?suse_version}
 service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. Please check logs."
 mkdir -p /srv/www/htdocs/opsi
-service apache2 start || service apache2 restart
+service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
 %else
 service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
 mkdir -p /var/www/html/opsi
-service apache2 start || service apache2 restart
+service apache2 start || service apache2 restart echo "Restarting apache2 failed. Please check logs."
 %endif
 %endif
 
