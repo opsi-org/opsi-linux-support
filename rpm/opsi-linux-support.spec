@@ -67,11 +67,16 @@ fi
 service nfs restart && showmount -e localhost || echo "Restarting nfs failed. Please check logs."
 mkdir -p /var/www/html/opsi
 service httpd start || service httpd restart || echo "Restarting httpd failed. Please check logs."
+chkconfig httpd on || echo "Adding httpd to autoboot failed. Please check logs."
 %else
 %if 0%{?suse_version}
 service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. Please check logs."
-mkdir -p /srv/www/htdocs/opsi
+mkdir -p /srv/www/htdocs/opsi || echo "mkdir failed. Please check logs."
+chmod +x /srv/www/htdocs/opsi || echo "Chmod failed. Please check logs."
+chmod 755 /srv/www/htdocs/opsi || echo "Chmod failed. Please check logs."
+sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "SED command on apache config failed. Please check logs"
 service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
+systemctl enable apache2 || echo "Adding httpd to autoboot failed. Please check logs."
 %else
 service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
 mkdir -p /var/www/html/opsi
