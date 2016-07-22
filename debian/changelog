@@ -1,8 +1,19 @@
-opsi-linux-support (1.0-9) UNRELEASED; urgency=medium
+opsi-linux-support (1.0-10) testing; urgency=medium
 
+  * Re-release for rebuild.
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Thu, 21 Jul 2016 17:41:40 +0200
+
+opsi-linux-support (1.0-9) experimental; urgency=medium
+
+  [ Niko Wenselowski ]
   * RPM: Summary does not end with a dot anymore.
 
- -- Niko Wenselowski <n.wenselowski@uib.de>  Fri, 25 Sep 2015 12:08:35 +0200
+  [ Mathias Radtke ]
+  * Added new build dependency: apache2/hhtpd
+  * creating local apache repo opsi dir /var/www/html/opsi/ for debian8 and ubuntu16-04 local repository
+
+ -- Mathias Radtke <m.radtke@uib.de>  Thu, 30 Jun 2016 11:50:15 +0200
 
 opsi-linux-support (1.0-8) testing; urgency=medium
 

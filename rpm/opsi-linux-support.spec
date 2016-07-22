@@ -7,16 +7,16 @@
 #
 Name:           opsi-linux-support
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora_version}
-Requires:       nfs-utils
+Requires:       nfs-utils, httpd
 %else
-Requires:       nfs-kernel-server
+Requires:       nfs-kernel-server, apache2
 %endif
 Url:            http://www.opsi.org
 License:        AGPL-3.0+
 Group:          Productivity/Networking/Opsi
 Version:        1.0
-Release:        1
-Source:		%{name}_{%version}-{%release}.tar.gz
+Release:        9
+Source:         opsi-linux-support_1.0-9.tar.gz
 Summary:        Configure a system to be able to deploy Linux with opsi.
 %if %{?suse_version: %{suse_version} >= 1120} %{!?suse_version:1}
 BuildArch:      noarch
@@ -65,11 +65,22 @@ fi
 
 %if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600 || 0%{?suse_version} == 1110
 service nfs restart && showmount -e localhost || echo "Restarting nfs failed. Please check logs."
+mkdir -p /var/www/html/opsi
+service httpd start || service httpd restart || echo "Restarting httpd failed. Please check logs."
+chkconfig httpd on || echo "Adding httpd to autoboot failed. Please check logs."
 %else
 %if 0%{?suse_version}
 service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. Please check logs."
+mkdir -p /srv/www/htdocs/opsi || echo "mkdir failed. Please check logs."
+chmod +x /srv/www/htdocs/opsi || echo "Chmod failed. Please check logs."
+chmod 755 /srv/www/htdocs/opsi || echo "Chmod failed. Please check logs."
+sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "SED command on apache config failed. Please check logs"
+service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
+systemctl enable apache2 || echo "Adding httpd to autoboot failed. Please check logs."
 %else
 service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
+mkdir -p /var/www/html/opsi
+service apache2 start || service apache2 restart echo "Restarting apache2 failed. Please check logs."
 %endif
 %endif
 
