@@ -1,3 +1,9 @@
+opsi-linux-support (4.0.7-1) experimental; urgency=medium
+
+  * Better support for SLES 11.
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Mon, 25 Jul 2016 12:07:11 +0200
+
 opsi-linux-support (1.0-10) testing; urgency=medium
 
   * Re-release for rebuild.
