@@ -1,3 +1,9 @@
+opsi-linux-support (4.0.7-2) testing; urgency=medium
+
+  * Better support for CentOS / RHEL 6.
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Mon, 25 Jul 2016 16:26:05 +0200
+
 opsi-linux-support (4.0.7-1) experimental; urgency=medium
 
   * Better support for SLES 11.

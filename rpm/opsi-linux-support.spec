@@ -66,8 +66,8 @@ fi
 %if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600
 service nfs restart && showmount -e localhost || echo "Restarting nfs failed. Please check logs."
 mkdir -p /var/www/html/opsi
-service httpd start || service httpd restart || echo "Restarting httpd failed. Please check logs."
-chkconfig httpd on || echo "Adding httpd to autoboot failed. Please check logs."
+systemctl enable httpd || "Enabling service httpd failed."
+systemctl start httpd || systemctl restart httpd || echo "Restarting httpd failed. Please check logs."
 %else
 %if 0%{?suse_version} == 1110
 # The order of the following restart calls is VERY important!
