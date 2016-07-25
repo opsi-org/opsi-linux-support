@@ -63,11 +63,19 @@ if [ $res -ne 0 ]; then
 	echo '/var/lib/opsi/depot/opsi_nfs_share *(ro,no_root_squash,insecure,async,subtree_check,fsid=0)' >> /etc/exports
 fi
 
-%if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600 || 0%{?suse_version} == 1110
+%if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600
 service nfs restart && showmount -e localhost || echo "Restarting nfs failed. Please check logs."
 mkdir -p /var/www/html/opsi
 service httpd start || service httpd restart || echo "Restarting httpd failed. Please check logs."
 chkconfig httpd on || echo "Adding httpd to autoboot failed. Please check logs."
+%else
+%if 0%{?suse_version} == 1110
+# The order of the following restart calls is VERY important!
+service rpcbind restart || echo "Restarting rpcbind failed. Please check logs."
+service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. If it was not installed before you may need to restart to have this working. Please check logs."
+mkdir -p /var/www/html/opsi
+service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
+chkconfig apache2 on || echo "Adding apache2 to autoboot failed. Please check logs."
 %else
 %if 0%{?suse_version}
 service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. Please check logs."
@@ -81,6 +89,7 @@ systemctl enable apache2 || echo "Adding httpd to autoboot failed. Please check 
 service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
 mkdir -p /var/www/html/opsi
 service apache2 start || service apache2 restart echo "Restarting apache2 failed. Please check logs."
+%endif
 %endif
 %endif
 
