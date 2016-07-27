@@ -88,7 +88,7 @@ systemctl enable apache2 || echo "Adding httpd to autoboot failed. Please check 
 %else
 service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
 mkdir -p /var/www/html/opsi
-service apache2 start || service apache2 restart echo "Restarting apache2 failed. Please check logs."
+service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
 %endif
 %endif
 %endif
