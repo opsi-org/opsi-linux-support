@@ -1,3 +1,11 @@
+opsi-linux-support (4.0.7-3) testing; urgency=medium
+
+  * SLES11 should now run out of the box.
+  * Repaired support for CentOS / RHEL 7.
+  * Fixed accidently broken support for CentOS / RHEL 6.
+
+ -- Niko Wenselowski <n.wenselowski@uib.de>  Wed, 27 Jul 2016 16:56:50 +0200
+
 opsi-linux-support (4.0.7-2) testing; urgency=medium
 
   * Better support for CentOS / RHEL 6.

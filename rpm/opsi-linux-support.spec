@@ -53,7 +53,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 [ -e "/etc/exports" ] || touch /etc/exports
 
-[ -d "/var/lib/opsi/depot/opsi_nfs_share" ] || mkdir -p "/var/lib/opsi/depot/opsi_nfs_share"
+mkdir -p "/var/lib/opsi/depot/opsi_nfs_share"
 
 set +e
 grep opsi_nfs_share /etc/exports >/dev/null 2>&1
@@ -66,15 +66,16 @@ fi
 %if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600
 service nfs restart && showmount -e localhost || echo "Restarting nfs failed. Please check logs."
 mkdir -p /var/www/html/opsi
-systemctl enable httpd || "Enabling service httpd failed."
-systemctl start httpd || systemctl restart httpd || echo "Restarting httpd failed. Please check logs."
+service httpd start || service httpd restart || echo "Restarting httpd failed. Please check logs."
+chkconfig httpd on || echo "Adding httpd to autoboot failed. Please check logs."
 %else
 %if 0%{?suse_version} == 1110
 # The order of the following restart calls is VERY important!
 service rpcbind restart || echo "Restarting rpcbind failed. Please check logs."
 service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. If it was not installed before you may need to restart to have this working. Please check logs."
-mkdir -p /var/www/html/opsi
-service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
+mkdir -p /srv/www/htdocs/opsi
+sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "sed command on apache config failed. Please check logs"
+service apache2 restart || echo "Restarting apache2 failed. Please check logs."
 chkconfig apache2 on || echo "Adding apache2 to autoboot failed. Please check logs."
 %else
 %if 0%{?suse_version}
@@ -88,7 +89,7 @@ systemctl enable apache2 || echo "Adding httpd to autoboot failed. Please check 
 %else
 service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
 mkdir -p /var/www/html/opsi
-service apache2 start || service apache2 restart echo "Restarting apache2 failed. Please check logs."
+service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
 %endif
 %endif
 %endif
