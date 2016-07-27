@@ -73,8 +73,9 @@ systemctl start httpd || systemctl restart httpd || echo "Restarting httpd faile
 # The order of the following restart calls is VERY important!
 service rpcbind restart || echo "Restarting rpcbind failed. Please check logs."
 service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. If it was not installed before you may need to restart to have this working. Please check logs."
-mkdir -p /var/www/html/opsi
-service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
+mkdir -p /srv/www/htdocs/opsi
+sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "sed command on apache config failed. Please check logs"
+service apache2 restart || echo "Restarting apache2 failed. Please check logs."
 chkconfig apache2 on || echo "Adding apache2 to autoboot failed. Please check logs."
 %else
 %if 0%{?suse_version}
