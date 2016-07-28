@@ -51,6 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # ===[ post ]=======================================
 %post
+# configuring NFS
 [ -e "/etc/exports" ] || touch /etc/exports
 
 mkdir -p "/var/lib/opsi/depot/opsi_nfs_share"
@@ -63,36 +64,48 @@ if [ $res -ne 0 ]; then
 	echo '/var/lib/opsi/depot/opsi_nfs_share *(ro,no_root_squash,insecure,async,subtree_check,fsid=0)' >> /etc/exports
 fi
 
-%if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600
-service nfs restart && showmount -e localhost || echo "Restarting nfs failed. Please check logs."
-mkdir -p /var/www/html/opsi
-service httpd start || service httpd restart || echo "Restarting httpd failed. Please check logs."
-chkconfig httpd on || echo "Adding httpd to autoboot failed. Please check logs."
+%if 0%{?centos_version} || 0%{?rhel_version}
+	%if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600
+		service nfs restart || echo "Restarting nfs failed. Please check logs."
+	%else
+		service nfs-server restart || echo "Restarting nfs-server failed. Please check logs."
+	%endif
 %else
-%if 0%{?suse_version} == 1110
-# The order of the following restart calls is VERY important!
-service rpcbind restart || echo "Restarting rpcbind failed. Please check logs."
-service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. If it was not installed before you may need to restart to have this working. Please check logs."
-mkdir -p /srv/www/htdocs/opsi
-sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "sed command on apache config failed. Please check logs"
-service apache2 restart || echo "Restarting apache2 failed. Please check logs."
-chkconfig apache2 on || echo "Adding apache2 to autoboot failed. Please check logs."
+	%if 0%{?suse_version} == 1110
+		# Restart rpcbind before restarting nfsserver
+		service rpcbind restart || echo "Restarting rpcbind failed. Please check logs."
+	%endif
+
+	service nfsserver restart || echo "Restarting nfsserver failed. If it was not installed before you may need to restart to have this working. Please check logs."
+%endif
+showmount -e localhost || echo "Showing NFS mounts failed."
+# END configuring NFS
+
+# Configuring webserver
+%if 0%{?centos_version} || 0%{?rhel_version}
+	HTTPDIR="/var/www/html/opsi"
 %else
-%if 0%{?suse_version}
-service nfsserver restart && showmount -e localhost || echo "Restarting nfsserver failed. Please check logs."
-mkdir -p /srv/www/htdocs/opsi || echo "mkdir failed. Please check logs."
-chmod +x /srv/www/htdocs/opsi || echo "Chmod failed. Please check logs."
-chmod 755 /srv/www/htdocs/opsi || echo "Chmod failed. Please check logs."
-sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "SED command on apache config failed. Please check logs"
-service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
-systemctl enable apache2 || echo "Adding httpd to autoboot failed. Please check logs."
+	HTTPDIR="/srv/www/htdocs/opsi"
+%endif
+
+mkdir -p "$HTTPDIR"
+
+%if 0%{?centos_version} || 0%{?rhel_version}
+	chkconfig httpd on  && echo "Starting httpd on boot." || echo "Adding httpd to autoboot failed. Please check logs."
+	service httpd restart || echo "Restarting httpd failed. Please check logs."
 %else
-service nfs-server restart && showmount -e localhost || echo "Restarting nfs-server failed. Please check logs."
-mkdir -p /var/www/html/opsi
-service apache2 start || service apache2 restart || echo "Restarting apache2 failed. Please check logs."
+	chmod 755 "$HTTPDIR" || echo "Chmod failed. Please check logs."
+
+	sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "sed command on apache config failed. Please check logs"
+	service apache2 restart || echo "Restarting apache2 failed. Please check logs."
+
+	%if 0%{?suse_version} == 1110
+		chkconfig apache2 on && echo "Starting apache2 on boot." || echo "Adding apache2 to autoboot failed. Please check logs."
+	%else
+		systemctl enable apache2 && echo "Starting apache2 on boot." || echo "Adding apache2 to autoboot failed. Please check logs."
+	%endif
 %endif
-%endif
-%endif
+# END Configuring webserver
 
 # ===[ files ]======================================
 %files
