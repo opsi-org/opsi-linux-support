@@ -94,8 +94,6 @@ mkdir -p "$HTTPDIR"
 	chkconfig httpd on  && echo "Starting httpd on boot." || echo "Adding httpd to autoboot failed. Please check logs."
 	service httpd restart || echo "Restarting httpd failed. Please check logs."
 %else
-	chmod 755 "$HTTPDIR" || echo "Chmod failed. Please check logs."
-
 	sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "sed command on apache config failed. Please check logs"
 	service apache2 restart || echo "Restarting apache2 failed. Please check logs."
 
