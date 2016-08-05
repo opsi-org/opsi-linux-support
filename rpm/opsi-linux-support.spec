@@ -96,7 +96,6 @@ mkdir -p "$HTTPDIR"
 %else
 	chmod 755 "$HTTPDIR" || echo "Chmod failed. Please check logs."
 
-	sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "sed command on apache config failed. Please check logs"
 	service apache2 restart || echo "Restarting apache2 failed. Please check logs."
 
 	%if 0%{?suse_version} == 1110
