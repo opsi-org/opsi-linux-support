@@ -1,5 +1,5 @@
 #! /bin/bash -e
-# Copyright (C) 2015 uib GmbH
+# Copyright (C) 2015-2016 uib GmbH
 # http://www.uib.de
 # All rights reserved.
 
@@ -19,7 +19,11 @@ case "$1" in
 
 		service nfs-kernel-server restart && showmount -e localhost || echo "Restarting nfs-kernel-server failed. Please check logs."
 
-		mkdir -p /var/www/html/opsi/
+		if which ucr >/dev/null 2>/dev/null; then
+			mkdir -p /var/www/opsi/
+		else
+			mkdir -p /var/www/html/opsi/
+		fi
 	;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)
