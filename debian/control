@@ -7,7 +7,10 @@ Build-Depends: debhelper (>= 7.0.50~)
 
 Package: opsi-linux-support
 Architecture: all
-Depends: nfs-kernel-server, apache2, ${shlibs:Depends}, ${misc:Depends}
+Depends: apache2,
+	nfs-kernel-server,
+	${shlibs:Depends},
+	${misc:Depends}
 Description: Configure system to be able to deploy Linux with opsi.
  This package configures the system so that shares and
  software required to deploy Linux via opsi are configured.
