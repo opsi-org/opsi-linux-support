@@ -13,6 +13,10 @@ Requires:       nfs-utils
 Requires:       apache2
 Requires:       nfs-kernel-server
 %endif
+%if 0%{?centos_version} || 0%{?is_opensuse}
+# RHEL and SLES12-SP3: no paramiko in standard repos
+Requires:       python-paramiko
+%endif
 Url:            http://www.opsi.org
 License:        AGPL-3.0+
 Group:          Productivity/Networking/Opsi

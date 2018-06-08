@@ -9,6 +9,7 @@ Package: opsi-linux-support
 Architecture: all
 Depends: apache2,
 	nfs-kernel-server,
+	python-paramiko,
 	${shlibs:Depends},
 	${misc:Depends}
 Description: Configure system to be able to deploy Linux with opsi.
