@@ -1,15 +1,21 @@
 #
 # spec file for package opsi-linux-support
 #
-# Copyright (c) 2015 uib GmbH.
+# Copyright (c) 2015-2018 uib GmbH.
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 #
 Name:           opsi-linux-support
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora_version}
-Requires:       nfs-utils, httpd
+Requires:       httpd
+Requires:       nfs-utils
 %else
-Requires:       nfs-kernel-server, apache2
+Requires:       apache2
+Requires:       nfs-kernel-server
+%endif
+%if 0%{?centos_version} || 0%{?is_opensuse}
+# RHEL and SLES12-SP3: no paramiko in standard repos
+Requires:       python-paramiko
 %endif
 Url:            http://www.opsi.org
 License:        AGPL-3.0+
