@@ -24,9 +24,7 @@ Version:        1.0
 Release:        9
 Source:         opsi-linux-support_1.0-9.tar.gz
 Summary:        Configure a system to be able to deploy Linux with opsi.
-%if %{?suse_version: %{suse_version} >= 1120} %{!?suse_version:1}
 BuildArch:      noarch
-%endif
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 # ===[ description ]================================
@@ -71,17 +69,8 @@ if [ $res -ne 0 ]; then
 fi
 
 %if 0%{?centos_version} || 0%{?rhel_version}
-	%if 0%{?centos_version} == 600 || 0%{?rhel_version} == 600
-		service nfs restart || echo "Restarting nfs failed. Please check logs."
-	%else
-		service nfs-server restart || echo "Restarting nfs-server failed. Please check logs."
-	%endif
+	service nfs-server restart || echo "Restarting nfs-server failed. Please check logs."
 %else
-	%if 0%{?suse_version} == 1110
-		# Restart rpcbind before restarting nfsserver
-		service rpcbind restart || echo "Restarting rpcbind failed. Please check logs."
-	%endif
-
 	service nfsserver restart || echo "Restarting nfsserver failed. If it was not installed before you may need to restart to have this working. Please check logs."
 %endif
 showmount -e localhost || echo "Showing NFS mounts failed."
@@ -100,15 +89,10 @@ mkdir -p "$HTTPDIR"
 	chkconfig httpd on  && echo "Starting httpd on boot." || echo "Adding httpd to autoboot failed. Please check logs."
 	service httpd restart || echo "Restarting httpd failed. Please check logs."
 %else
-	chmod 755 "$HTTPDIR" || echo "Chmod failed. Please check logs."
-
+	sed -i 's/Options None/Options All/g' /etc/apache2/default-server.conf || echo "sed command on apache config failed. Please check logs"
 	service apache2 restart || echo "Restarting apache2 failed. Please check logs."
 
-	%if 0%{?suse_version} == 1110
-		chkconfig apache2 on && echo "Starting apache2 on boot." || echo "Adding apache2 to autoboot failed. Please check logs."
-	%else
-		systemctl enable apache2 && echo "Starting apache2 on boot." || echo "Adding apache2 to autoboot failed. Please check logs."
-	%endif
+	systemctl enable apache2.service && echo "Starting apache2 on boot." || echo "Adding apache2 to autoboot failed. Please check logs."
 %endif
 # END Configuring webserver
 
